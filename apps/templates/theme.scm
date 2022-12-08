@@ -4,6 +4,7 @@
 ;;; copyright interest on this file.
 
 (define-module (apps templates theme)
+  #:use-module (apps utils)
   #:use-module (apps templates components)
   #:export (theme))
 
@@ -65,6 +66,9 @@
       (meta (@ (name "keywords") (content ,(string-join keywords ", "))))
       (meta (@ (name "description") (content ,description)))
       (meta (@ (name "viewport") (content "width=device-width, initial-scale=1.0")))
+
+      ;; Main CSS file
+      (link (@ (rel "stylesheet") (href "/static/main.css")))
 
       ;; Additional CSS.
       ,@(map (lambda (style-sheet)

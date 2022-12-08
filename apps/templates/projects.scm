@@ -1,22 +1,40 @@
 (define-module (apps templates projects)
   #:use-module (haunt post)
+  #:use-module (apps utils)
   #:use-module (apps templates theme)
+  #:use-module (apps templates components)
   #:export (
             index-t
             project-t))
 
-(define (index-t)
+(define (index-buffer posts)
+  (buffer
+   #:filename "projects.html"
+   #:content
+   `((h1 "Our projects")
+     (ul ,@(map
+            (lambda (post)
+              `((li
+                 (a (@ (href ,(get-url (post-slug post) #:category %project-category)))
+                    ,(post-ref post 'title)))))
+            posts)))))
+
+(define (project-buffer post)
+  (buffer
+   #:filename (string-append (post-slug post) ".html")
+   #:content (post-sxml post)))
+
+(define (index-t posts)
   (theme
    #:title '("Projects")
    #:content
-   `(main
-     (h1 "Projects"))))
+   (window
+    (list (index-buffer posts)))))
 
-(define (project-t post)
-  (let ((title (post-ref post 'title)))
-    (theme
-     #:title (list "Projects" title)
-     #:content
-     `(main
-       (h1 ,title)
-       ,(post-sxml post)))))
+(define (project-t posts post)
+  (theme
+   #:title (list "Projects" (post-ref post 'title))
+   #:content
+   (window
+    (list (index-buffer posts)
+          (project-buffer post)))))

@@ -11,18 +11,18 @@
 
 (define (builder site posts)
   "Return list of haunt pages for projects to display."
-  (flatten
-   (list (index-builder)
-         (project-builder site posts))))
+  (let ((project-posts (get-posts-by-category posts %project-category)))
+    (flatten
+     (list (index-builder site project-posts)
+           (project-builder site project-posts)))))
 
-(define (index-builder)
-  (make-page "projects/index.html" (index-t) sxml->html))
+(define (index-builder site posts)
+  (make-page "projects/index.html" (index-t posts) sxml->html))
 
 (define (project-builder site posts)
   (map
    (lambda (post)
      (make-page (string-append %project-category (post-slug post) ".html")
-                (project-t post)
+                (project-t posts post)
                 sxml->html))
-   (filter (lambda (post) (post-category? post %project-category))
-           posts)))
+   posts))
