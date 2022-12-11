@@ -21,6 +21,7 @@
 (define (index-t posts)
   (theme
    #:title '("About us")
+   #:active-menu-item "about.html"
    #:content
    (window
     (list (index-buffer posts #:center? #t)))))
@@ -28,6 +29,7 @@
 (define (about-t posts post)
   (theme
    #:title (list "About" (post-ref post 'title))
+   #:active-menu-item "about.html"
    #:content
    (window
     (list (index-buffer posts #:small? #t)

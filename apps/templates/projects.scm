@@ -21,6 +21,7 @@
 (define (index-t posts)
   (theme
    #:title '("Projects")
+   #:active-menu-item "projects.html"
    #:content
    (window
     (list (index-buffer posts #:center? #t)))))
@@ -28,6 +29,7 @@
 (define (project-t posts post)
   (theme
    #:title (list "Projects" (post-ref post 'title))
+   #:active-menu-item "projects.html"
    #:content
    (window
     (list (index-buffer posts #:small? #t)

@@ -5,6 +5,7 @@
 
 (define-module (apps templates theme)
   #:use-module (apps utils)
+  #:use-module (apps navigation)
   #:use-module (apps templates components)
   #:export (theme))
 
@@ -12,10 +13,11 @@
                 (title '())
                 (description "")
                 (keywords '())
-                (active-menu-item "About")
+                (active-menu-item "index.html")
                 (css '())
                 (scripts '())
                 (crumbs '())
+                (hrefs %main-navigation)
                 (content '(div "")))
   "Return an SHTML document using the website's theme.
 
@@ -37,7 +39,7 @@
    ACTIVE-MENU-ITEM (string)
      The label of the menu item in the navigation bar that should be
      highlighted to indicate the current section of the website that
-     is being browsed. If not provided, the value defaults to 'About'.
+     is being browsed. If not provided, the value defaults to 'index.html'.
 
    CSS (list)
      A list of strings that represent absolute URL paths to additional
@@ -80,4 +82,6 @@
                `(script (@ (src ,script)) ""))
              scripts))
 
-     (body ,content))))
+     (body
+      ,(tabs hrefs active-menu-item)
+      ,content))))

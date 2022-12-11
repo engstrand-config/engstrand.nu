@@ -48,12 +48,12 @@ body {
 
 @media (prefers-color-scheme: dark) {
     body {
-        --color-background: #030912;
-        --color-background-light: #061325;
-        --color-primary: #ff6feb;
-        --color-secondary: #1a5dbb;
+        --color-background: #101010;
+        --color-background-light: #393939;
+        --color-primary: #ec39d4;
+        --color-secondary: #317fec;
         --color-default-text: #ffffff;
-        --color-accent-text: #333333;
+        --color-accent-text: #ffffff;
         --color-secondary-text: #7493ff;
         --color-content-text: #eeeeee;
         --color-line-number: #8c8c8c;
@@ -80,6 +80,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: row;
+    padding-top: calc(1.02 * var(--bar-height));
 }
 
 .buffer {
@@ -127,15 +128,16 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-right: var(--gutter-width);
 }
 
 .buffer-text-wrapper.center {
     align-items: center;
+    padding-right: var(--gutter-width);
 }
 
 .buffer-text {
     width: auto;
+    min-width: var(--content-inner-max-width);
     padding: 0 var(--line-height);
     padding-bottom: calc(4 * var(--line-height));
     font-size: var(--font-size);
@@ -157,7 +159,7 @@ header {
     align-items: center;
     width: 100%;
     height: var(--bar-height);
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: var(--z-index-fixed);
     background-color: var(--color-background-light);
@@ -181,11 +183,22 @@ header {
     margin-right: 0.5em;
 }
 
-.tab-active {
-    background-color: var(--color-primary);
+.tab:focus {
+    outline: none;
+    background-color: var(--color-secondary);
 }
 
-.tab-active, .block-primary, .block-secondary, th {
+.tab:hover {
+    outline: none;
+    background-color: var(--color-secondary);
+}
+
+.tab-active {
+    background-color: var(--color-background);
+    color: var(--color-default-text);
+}
+
+.block-primary, .block-secondary, th {
     color: var(--color-accent-text);
 }
 
@@ -257,6 +270,7 @@ footer {
     padding: 0 var(--spacing-sm);
     display: inline-flex;
     align-items: center;
+    color: var(--color-default-text);
 }
 
 .block.scroll {
@@ -389,6 +403,9 @@ a:hover, a:focus {
     background-color: var(--color-primary);
     color: var(--color-accent-text);
     font-weight: normal;
+}
+
+a:focus {
     outline: 2px solid var(--color-primary);
     outline-offset: 0px;
     min-height: var(--line-height);

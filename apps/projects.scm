@@ -17,7 +17,7 @@
            (project-builder site project-posts)))))
 
 (define (index-builder site posts)
-  (make-page "projects/index.html" (index-t posts) sxml->html))
+  (make-page "projects.html" (index-t posts) sxml->html))
 
 (define (project-builder site posts)
   (map

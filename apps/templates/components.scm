@@ -51,36 +51,25 @@ or more vim buffers."
                        (tabindex -1)))
              (p (@ (id "keybinding-display"))))))
 
-(define* (tabs hrefs)
-  "Return an SHTML element representing a list of tabs for a buffer.
-HREFS should be a list of strings or a list of tuples with the href
-as key, and as a value a boolean value indicating whether the tab
-is currently active.
-
-@example
-(tabs (list (\"tab-1\" . #t) \"tab-2\" \"tab-3\"))
-@end example"
+(define* (tabs hrefs active-menu-item)
+  "Return an SHTML element representing a list of tabs for a buffer."
   `(header (@ (class "bar")
               (id "tabbar"))
            ,@(map (lambda (pair)
                     (let ((index (number->string (car pair)))
                           (href (cadr pair)))
-                      (if (pair? href)
-                          `((a (@ (href ,(car href))
-                                 (class (string-join
-                                         (list "tab" ,(if (cadr href) "tab-active" ""))
-                                         " "))
-                                 (data-id ,index))
-                              ,(string-join (list index (car href)) " ")))
-                          `((a (@ (href ,href)
-                                 (class "tab")
-                                 (data-id ,index))
-                              ,(string-join (list index href) " "))))))
-                  (zip (iota (length hrefs) 0) hrefs))))
+                      `((a (@ (href ,(string-append "/" href))
+                              (class ,(string-join
+                                       (append '("tab")
+                                               (if (equal? href active-menu-item)
+                                                   '("tab-active")
+                                                   '()))))
+                              (data-id ,index))
+                           ,(string-join (list index href) " ")))))
+                  (zip (iota (length hrefs) 1) hrefs))))
 
 (define* (buffer #:key
                  (filename "")
-                 (hrefs '())
                  (content '())
                  (small? #f)
                  (center? #f)
@@ -89,7 +78,6 @@ is currently active.
 including a list of tabs, and a statusline."
   `(div (@ (class ,(string-join (append '("buffer") (if small? '("small") '()))))
            (tabindex ,tab-index))
-        ,(tabs hrefs)
         (section (@ (class "buffer-content"))
                  ;; TODO: Make into component
                  (aside (@ (class "gutter")))
