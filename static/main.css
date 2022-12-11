@@ -331,7 +331,7 @@ a, ol, ul, li, p, pre, td, th, h1, h2, h3, h4, h5 {
 }
 
 p {
-    display: inline-flex;
+    /* display: inline-flex; */
     flex-direction: row;
     flex-wrap: wrap;
     column-gap: calc(var(--font-size)*0.5);
@@ -373,6 +373,10 @@ blockquote, blockquote > p, h1, h2, h3, h4, h5, em, #content, th, input {
     color: var(--color-default-text);
 }
 
+blockquote > p {
+    color: var(--color-secondary);
+}
+
 a {
     font-weight: bold;
     height: var(--line-height);
@@ -401,45 +405,34 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    line-height: var(--line-height-lg);
+    line-height: calc(3 * var(--line-height));
     font-size: var(--line-height);
 }
 
+h1 + *,
 h1:first-of-type, blockquote > p {
     margin-top: 0;
 }
 
-h1 + * {
-    margin-top: var(--line-height);
-}
-
 h1::before, h2::before, h3::before, h4::before, h5::before,
 h1::after, h2::after, h3::after, h4::after, h5::after {
-    color: var(--color-secondary-text);
-}
-
-h3::before {
-    content: '[ ';
-}
-
-h3::after {
-    content: ' ]';
+    color: var(--color-line-number);
 }
 
 h2::before {
-    content: '[[ ';
+    content: '// ';
 }
 
-h2::after {
-    content: ' ]]';
+h3::before {
+    content: '/// ';
 }
 
-h1::before {
-    content: '═════ ';
+h4::before {
+    content: '//// ';
 }
 
-h1::after {
-    content: ' ═════';
+h5::before {
+    content: '///// ';
 }
 
 input {
@@ -522,12 +515,12 @@ blockquote {
 }
 
 blockquote::before {
-    content: '--- ';
+    content: '';
     color: var(--color-secondary-text);
     margin-right: var(--spacing-sm);
     display: inline-flex;
     align-items: center;
-    min-width: 2em;
+    border-left: 3px solid var(--color-secondary);
 }
 
 code > pre {
