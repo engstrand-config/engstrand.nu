@@ -6,7 +6,8 @@
             window
             statusline
             tabs
-            buffer))
+            buffer
+            content-buffer))
 
 (define (window buffers)
   "Return an SHTML element representing a window containing one
@@ -79,3 +80,8 @@ including a list of tabs, and a statusline."
                  (div (@ (class "buffer-text"))
                       ,content))
         ,(statusline filename)))
+
+(define (content-buffer post)
+  (buffer
+   #:filename (string-append (post-slug post) ".html")
+   #:content (post-sxml post)))

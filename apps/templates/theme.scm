@@ -60,8 +60,8 @@
      (head
       ,(if (null? title)
            `(title "Engstrand.nu")
-           `(title ,(string-join (append title '("Engstrand.nu")))
-                                 " — "))
+           `(title ,(string-join (append title '("Engstrand.nu"))
+                                 " — ")))
       (meta (@ (charset "UTF-8")))
       (meta (@ (name "keywords") (content ,(string-join keywords ", "))))
       (meta (@ (name "description") (content ,description)))

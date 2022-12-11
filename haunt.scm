@@ -5,6 +5,7 @@
              (haunt reader)
              (haunt reader commonmark)
              (haunt site)
+             ((apps about) #:prefix about:)
              ((apps projects) #:prefix projects:))
 
 (site #:title "Engstrand.nu"
@@ -13,5 +14,6 @@
       '((author . "Fredrik and Johan Engstrand")
         (email  . "contact@engstrand.nu"))
       #:readers (list html-reader commonmark-reader)
-      #:builders (list projects:builder
+      #:builders (list about:builder
+                       projects:builder
                        (static-directory "static")))
