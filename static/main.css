@@ -11,7 +11,7 @@
     --content-max-width: 900px;
     --content-height: 95vh;
     --content-max-height: 1200px;
-    --content-inner-max-width: 670px;
+    --content-inner-max-width: 80ch;
     --media-height: 460px;
     --gutter-width: 2.5em;
     --scroll-block-width: 2.5em;
@@ -111,10 +111,12 @@ body {
     display: flex;
     flex-direction: row;
     height: calc(100vh - 3 * var(--line-height));
+    margin-bottom: calc(2 * var(--line-height));
 }
 
 .buffer-text {
     padding: 0 var(--line-height);
+    padding-bottom: calc(4 * var(--line-height));
     font-size: var(--font-size);
     box-sizing: border-box;
     overflow: auto;
@@ -304,8 +306,7 @@ a, ol, ul, li, p, pre, td, th, h1, h2, h3, h4, h5 {
     line-height: var(--line-height);
     font-size: var(--font-size);
     margin: 0;
-    /* Limit width to 80 characters */
-    max-width: 80ch;
+    max-width: var(--content-inner-max-width);
 }
 
 p {
@@ -317,6 +318,7 @@ p {
 
 ol, ul {
     padding-left: var(--list-indent-width);
+    max-width: calc(var(--content-inner-max-width) - var(--list-indent-width));
 }
 
 li::marker {
@@ -355,17 +357,20 @@ a {
     height: var(--line-height);
     display: inline-block;
     color: var(--color-primary);
+    /* border: 2px solid transparent; */
 }
 
 a:hover, a:focus {
     background-color: var(--color-primary);
     color: var(--color-accent-text);
     font-weight: normal;
-    outline: none;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 0px;
+    min-height: var(--line-height);
 }
 
 a > img {
-    height: auto;
+    height: 100%;
     min-height: var(--line-height);
 }
 
@@ -452,8 +457,8 @@ pre[data-type="@ascii"] {
 img, video {
     max-width: var(--content-inner-max-width);
     min-height: var(--media-height);
-    height: var(--media-height);
-    width: auto;
+    height: auto;
+    width: 100%;
     object-fit: cover;
     align-self: flex-start;
     position: relative;
