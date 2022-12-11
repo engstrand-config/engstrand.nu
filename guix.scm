@@ -1,3 +1,5 @@
-(use-modules (gnu packages guile-xyz))
+(use-modules (gnu packages guile-xyz)
+             (gnu packages figlet))
 
-(list haunt)
+(list haunt
+      figlet)

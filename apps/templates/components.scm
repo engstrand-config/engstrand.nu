@@ -98,7 +98,7 @@ including a list of tabs, and a statusline."
   (buffer
    #:tab-index tab-index
    #:filename (string-append (post-slug post) ".html")
-   #:content (post-sxml post)))
+   #:content (post-with-metadata->sxml post)))
 
 (define (url-list posts category)
   "Return an SHTML element representing an unordered list of

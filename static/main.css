@@ -304,6 +304,8 @@ a, ol, ul, li, p, pre, td, th, h1, h2, h3, h4, h5 {
     line-height: var(--line-height);
     font-size: var(--font-size);
     margin: 0;
+    /* Limit width to 80 characters */
+    max-width: 80ch;
 }
 
 p {
@@ -440,6 +442,11 @@ button {
 
 pre {
     display: flex;
+}
+
+pre[data-type="@ascii"] {
+    color: var(--color-primary);
+    font-weight: bold;
 }
 
 img, video {

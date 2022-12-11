@@ -1,4 +1,5 @@
 title: Pywalfox
+ascii: Pywalfox
 ---
 
 > **Dynamic theming of Firefox (and Thunderbird) using your Pywal colors**
