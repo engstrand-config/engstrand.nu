@@ -7,8 +7,12 @@
             index-t
             about-t))
 
-(define (index-buffer posts)
+(define* (index-buffer posts #:key
+                       (small? #f)
+                       (center? #f))
   (buffer
+   #:small? small?
+   #:center? center?
    #:filename "about.html"
    #:content
    `((h1 "About us")
@@ -19,12 +23,12 @@
    #:title '("About us")
    #:content
    (window
-    (list (index-buffer posts)))))
+    (list (index-buffer posts #:center? #t)))))
 
 (define (about-t posts post)
   (theme
    #:title (list "About" (post-ref post 'title))
    #:content
    (window
-    (list (index-buffer posts)
+    (list (index-buffer posts #:small? #t)
           (content-buffer post)))))

@@ -87,6 +87,15 @@ body {
     flex-direction: column;
     width: 100%;
     border-right: 2px solid var(--color-background-light);
+    flex: 4;
+}
+
+.buffer.small {
+    flex: 3;
+}
+
+.buffer.small .block.info {
+    display: none;
 }
 
 .buffer:focus {
@@ -114,7 +123,19 @@ body {
     margin-bottom: calc(2 * var(--line-height));
 }
 
+.buffer-text-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-right: var(--gutter-width);
+}
+
+.buffer-text-wrapper.center {
+    align-items: center;
+}
+
 .buffer-text {
+    width: auto;
     padding: 0 var(--line-height);
     padding-bottom: calc(4 * var(--line-height));
     font-size: var(--font-size);

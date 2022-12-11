@@ -26,9 +26,9 @@ or more vim buffers."
     (section (@ (class "bar status active"))
              (div (@ (class "block block-primary mode"))
                   "NORMAL")
-             (div (@ (class "block file"))
+             (div (@ (class "block expand file"))
                   ,filename)
-             (div (@ (class "block expand align-right info"))
+             (div (@ (class "block align-right info"))
                   ,(string-join (list "engstrand.nu" "utf-8" "html") " | "))
              (div (@ (class "block block-secondary align-right scroll"))
                   ;; Dynamically updated using JS
@@ -82,16 +82,21 @@ is currently active.
                  (filename "")
                  (hrefs '())
                  (content '())
+                 (small? #f)
+                 (center? #f)
                  (tab-index 0))
   "Return an SHTML element representing a complete vim buffer,
 including a list of tabs, and a statusline."
-  `(div (@ (class "buffer") (tabindex ,tab-index))
+  `(div (@ (class ,(string-join (append '("buffer") (if small? '("small") '()))))
+           (tabindex ,tab-index))
         ,(tabs hrefs)
         (section (@ (class "buffer-content"))
                  ;; TODO: Make into component
                  (aside (@ (class "gutter")))
-                 (div (@ (class "buffer-text"))
-                      ,content))
+                 (div (@ (class ,(string-join (append '("buffer-text-wrapper")
+                                                      (if center? '("center") '())))))
+                      (div (@ (class "buffer-text"))
+                           ,content)))
         ,(statusline filename)))
 
 (define* (content-buffer post #:optional (tab-index 1))

@@ -7,8 +7,12 @@
             index-t
             project-t))
 
-(define (index-buffer posts)
+(define* (index-buffer posts #:key
+                       (small? #f)
+                       (center? #f))
   (buffer
+   #:small? small?
+   #:center? center?
    #:filename "projects.html"
    #:content
    `((h1 "Our projects")
@@ -19,12 +23,12 @@
    #:title '("Projects")
    #:content
    (window
-    (list (index-buffer posts)))))
+    (list (index-buffer posts #:center? #t)))))
 
 (define (project-t posts post)
   (theme
    #:title (list "Projects" (post-ref post 'title))
    #:content
    (window
-    (list (index-buffer posts)
+    (list (index-buffer posts #:small? #t)
           (content-buffer post)))))
