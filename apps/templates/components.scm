@@ -7,7 +7,8 @@
             statusline
             tabs
             buffer
-            content-buffer))
+            content-buffer
+            url-list))
 
 (define (window buffers)
   "Return an SHTML element representing a window containing one
@@ -22,7 +23,7 @@ or more vim buffers."
                      (language "html"))
   "Return an SHTML element representing a vim statusline."
   `(footer
-    (section (@ (class "bar status"))
+    (section (@ (class "bar status active"))
              (div (@ (class "block block-primary mode"))
                   "NORMAL")
              (div (@ (class "block file"))
@@ -34,9 +35,20 @@ or more vim buffers."
                   "0%")
              (div (@ (class "block block-secondary align-right position"))
                   "0:0"))
+    (section (@ (class "bar status inactive"))
+             (div (@ (class "block block-inactive file"))
+                  ,filename)
+             ;; Spacer
+             (div (@ (class "block expand")))
+             (div (@ (class "block block-inactive align-right scroll"))
+                  ;; Dynamically updated using JS
+                  "0%")
+             (div (@ (class "block align-right position"))
+                  "0:0"))
     (section (@ (class "bar commands"))
              (input (@ (id "command-input")
-                       (class "expand")))
+                       (class "expand")
+                       (tabindex -1)))
              (p (@ (id "keybinding-display"))))))
 
 (define* (tabs hrefs)
@@ -69,10 +81,11 @@ is currently active.
 (define* (buffer #:key
                  (filename "")
                  (hrefs '())
-                 (content '()))
+                 (content '())
+                 (tab-index 0))
   "Return an SHTML element representing a complete vim buffer,
 including a list of tabs, and a statusline."
-  `(div (@ (class "buffer"))
+  `(div (@ (class "buffer") (tabindex ,tab-index))
         ,(tabs hrefs)
         (section (@ (class "buffer-content"))
                  ;; TODO: Make into component
@@ -81,7 +94,24 @@ including a list of tabs, and a statusline."
                       ,content))
         ,(statusline filename)))
 
-(define (content-buffer post)
+(define* (content-buffer post #:optional (tab-index 1))
   (buffer
+   #:tab-index tab-index
    #:filename (string-append (post-slug post) ".html")
    #:content (post-sxml post)))
+
+(define (url-list posts category)
+  "Return an SHTML element representing an unordered list of
+links to each post in POSTS in CATEGORY. The first link will
+be automatically focused on "
+  `(ul ,@(map
+          (lambda (pair)
+            (let* ((index (car pair))
+                   (post (cadr pair))
+                   (href (get-url (post-slug post) #:category category)))
+              `((li
+                 (a (@ ,@(if (eq? index 0)
+                             `((href ,href) (autofocus ""))
+                             `((href ,href))))
+                    ,(post-ref post 'title))))))
+          (zip (iota (length posts) 0) posts))))

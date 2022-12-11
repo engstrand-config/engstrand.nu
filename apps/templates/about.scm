@@ -12,12 +12,7 @@
    #:filename "about.html"
    #:content
    `((h1 "About us")
-     (ul ,@(map
-            (lambda (post)
-              `((li
-                 (a (@ (href ,(get-url (post-slug post) #:category %about-category)))
-                    ,(post-ref post 'title)))))
-            posts)))))
+     ,(url-list posts %about-category))))
 
 (define (index-t posts)
   (theme

@@ -44,17 +44,34 @@ body {
     background-color: var(--color-background);
     background-size: cover;
     overflow: hidden;
+}
 
-    /* default theme */
-    --color-background: #030912;
-    --color-background-light: #061325;
-    --color-primary: #ff6feb;
-    --color-secondary: #1a5dbb;
-    --color-default-text: #ffffff;
-    --color-accent-text: #333333;
-    --color-secondary-text: #7493ff;
-    --color-content-text: #eeeeee;
-    --color-line-number: #8c8c8c;
+@media (prefers-color-scheme: dark) {
+    body {
+        --color-background: #030912;
+        --color-background-light: #061325;
+        --color-primary: #ff6feb;
+        --color-secondary: #1a5dbb;
+        --color-default-text: #ffffff;
+        --color-accent-text: #333333;
+        --color-secondary-text: #7493ff;
+        --color-content-text: #eeeeee;
+        --color-line-number: #8c8c8c;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        --color-background: #ffffff;
+        --color-background-light: #e8e8e8;
+        --color-primary: #8a2d7d;
+        --color-secondary: #1a5dbb;
+        --color-default-text: #333333;
+        --color-accent-text: #ffffff;
+        --color-secondary-text: #7493ff;
+        --color-content-text: #333333;
+        --color-line-number: #cccccc;
+    }
 }
 
 .window {
@@ -72,8 +89,21 @@ body {
     border-right: 2px solid var(--color-background-light);
 }
 
+.buffer:focus {
+    outline: none;
+}
+
 .buffer:last-of-type {
     border-right: 0px;
+}
+
+.status.inactive,
+.buffer:not(:focus-within) .status.active {
+    display: none;
+}
+
+.buffer:not(:focus-within) .status.inactive {
+    display: flex;
 }
 
 .buffer-content {
@@ -182,12 +212,17 @@ footer {
 
 .bar {
     width: 100%;
+    height: var(--bar-height);
     display: flex;
     flex-direction: row;
 }
 
 .bar.status {
     background-color: var(--color-background-light);
+}
+
+.bar.status.inactive {
+    background-color: var(--color-background);
 }
 
 .bar.commands {
@@ -238,10 +273,16 @@ footer {
 
 .block-primary {
     background-color: var(--color-primary);
+    color: var(--color-accent-text);
 }
 
 .block-secondary {
     background-color: var(--color-secondary);
+    color: var(--color-accent-text);
+}
+
+.block-inactive {
+    background-color: var(--color-background-light);
 }
 
 pre[data-type="@ascii"] {
@@ -303,7 +344,7 @@ tr.even {
     background-color: var(--color-background-light);
 }
 
-blockquote, blockquote > p, h1, h2, h3, h4, h5, em, #content, .block, th, input {
+blockquote, blockquote > p, h1, h2, h3, h4, h5, em, #content, th, input {
     color: var(--color-default-text);
 }
 
@@ -318,6 +359,7 @@ a:hover, a:focus {
     background-color: var(--color-primary);
     color: var(--color-accent-text);
     font-weight: normal;
+    outline: none;
 }
 
 a > img {

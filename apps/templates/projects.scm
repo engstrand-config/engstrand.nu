@@ -12,12 +12,7 @@
    #:filename "projects.html"
    #:content
    `((h1 "Our projects")
-     (ul ,@(map
-            (lambda (post)
-              `((li
-                 (a (@ (href ,(get-url (post-slug post) #:category %project-category)))
-                    ,(post-ref post 'title)))))
-            posts)))))
+     ,(url-list posts %project-category))))
 
 (define (index-t posts)
   (theme
